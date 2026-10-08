@@ -1,0 +1,79 @@
+{
+  "name": "oven-window",
+  "production_url": "https://oven-window.knightatha.chatgpt.site",
+  "production_version": "Sites v1",
+  "public_project_identifier": "appgprj_6ac63e37e0f881919084fac0ddfcc6d4",
+  "original_source_commit": "28d6d6994ada716ff010171ce08a7513a16ced37",
+  "original_files": [
+    {
+      "path": "dist/app.mjs",
+      "sha256": "b486ccc4d3acb5ae65c670ad7b7f9997c2a5cdb3aec8bd850de6a327f376ae69",
+      "size": 7619
+    },
+    {
+      "path": "dist/engine.mjs",
+      "sha256": "848ff0c2e67e4671b1e5b02a890aaa6fcef1c2fdc59cf188db710c51ec4410b2",
+      "size": 4961
+    },
+    {
+      "path": "dist/guide.html",
+      "sha256": "0648545577b85e8e8ae3500852e7bfc464e97e3c6d1ac07b64a72ef9fb3f9fdc",
+      "size": 6849
+    },
+    {
+      "path": "dist/icon.svg",
+      "sha256": "467ae84649705bbce052c8123c52cfc1b2e3c412db4fb332997409c6bb857c7a",
+      "size": 316
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "30a044eff9a684e4c2dab908ab650d8300f87ceffb88bd955edd70bd525a01dc",
+      "size": 5847
+    },
+    {
+      "path": "dist/privacy.html",
+      "sha256": "01e7ae3fed967d9fdb63b83d16e5a64e87d8c53f0eae25fe6d5715075883ed08",
+      "size": 2661
+    },
+    {
+      "path": "dist/robots.txt",
+      "sha256": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
+      "size": 23
+    },
+    {
+      "path": "dist/style.css",
+      "sha256": "c468799e2179c676f72c04dfc12ce59a3afb5b504968b20130eaac258004e78d",
+      "size": 7662
+    },
+    {
+      "path": "dist/worker.mjs",
+      "sha256": "5e860c978c9fad26a01ef4d7afc74e9d23fbe5bfbda8e08b5c40577530c95864",
+      "size": 204
+    },
+    {
+      "path": ".openai/hosting.json",
+      "sha256": "55bc804f3dd0bd07373c80c9ae0929ae220ff3a4c7075543514f40dee5392d0c",
+      "size": 106
+    },
+    {
+      "path": "firebase.json",
+      "sha256": "fdd8448285e37434054fb12251d6835699cb8e1b92e2e6ff552de5e918e63d0c",
+      "size": 657
+    },
+    {
+      "path": "package.json",
+      "sha256": "1cc8aa900dcfc673778a7297d7d247071ce2f0c2b731886fe973960962725473",
+      "size": 185
+    },
+    {
+      "path": "tests/engine.test.mjs",
+      "sha256": "6d6812a755e6aac9c6bdff40615e592ff9bf5a0a8a52376f976c2ec709709462",
+      "size": 3170
+    },
+    {
+      "path": "tests/browser_qa.py",
+      "sha256": "5ce1f758ed17a3f78e0d08a8e4b11038cb81c24944b020cbf14f98870c283d4b",
+      "size": 3013
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {solve,fits,timeLabel,actions,validate} from '../dist/engine.mjs';
+const dish=(extra={})=>({name:'A',temp:350,duration:30,slots:1,rest:0,early:30,...extra});const model=(dishes=[dish()],extra={})=>({serve:1020,capacity:2,buffer:15,unit:'F',dishes,...extra});
+test('one dish finishes at serving',()=>{const r=solve(model());assert.equal(r.status,'ok');assert.equal(r.items[0].end,1020);});
+test('same settings share slots',()=>{const r=solve(model([dish({early:0}),dish({name:'B',early:0})]));assert.equal(r.status,'ok');assert.equal(r.items[0].start,r.items[1].start);});
+test('third simultaneous dish exceeds capacity',()=>assert.equal(solve(model([dish({early:0}),dish({early:0}),dish({early:0})])).status,'impossible'));
+test('different temperatures conflict with fixed finish',()=>assert.equal(solve(model([dish({early:0}),dish({temp:375,early:0})])).status,'impossible'));
+test('sequential same setting needs no change buffer',()=>{const r=solve(model([dish({rest:30,early:30}),dish({early:0})],{capacity:1}));assert.equal(r.status,'ok');});
+test('temperature transition requires full buffer',()=>{assert.equal(solve(model([dish({rest:40,early:40}),dish({temp:375,early:0})])).status,'impossible');assert.equal(solve(model([dish({rest:45,early:45}),dish({temp:375,early:0})])).status,'ok');});
+test('oversized pan rejected before search',()=>assert.equal(solve(model([dish({slots:3})])).status,'impossible'));
+test('invalid window, empty and NaN',()=>{assert.equal(solve(model([dish({rest:40,early:20})])).status,'invalid');assert.equal(solve(model([])).status,'invalid');assert.equal(solve(model([dish({duration:NaN})])).status,'invalid');});
+test('low budget is unknown, never impossible',()=>assert.equal(solve(model(),0).status,'unknown'));
+test('previous-day display',()=>assert.equal(timeLabel(-30),'11:30 PM (1 day before)'));
+test('Celsius and fractional converted temperature',()=>assert.equal(solve(model([dish({temp:176.67})],{unit:'C'})).status,'ok'));
+test('sample matches documented times',()=>{const m=model([dish({duration:100,slots:2,rest:40,early:55}),dish({name:'B',temp:375,duration:25,rest:0,early:10}),dish({name:'C',temp:375,duration:20,rest:0,early:10})]);const r=solve(m);assert.equal(r.status,'ok');assert.equal(r.items.find(d=>d.name==='A').start,880);assert.equal(actions(r.items,m)[0].time,865);});
+test('randomized valid results satisfy all constraints',()=>{let seed=417;const rand=n=>{seed=(seed*1664525+1013904223)>>>0;return seed%n;};for(let k=0;k<250;k++){const m=model(Array.from({length:1+rand(5)},(_,i)=>dish({name:`D${i}`,temp:350+25*rand(3),duration:1+rand(70),rest:rand(10),early:15+rand(70),slots:1+rand(2)})),{capacity:1+rand(3),buffer:rand(20)});const r=solve(m,10000);if(r.status!=='ok')continue;for(const p of r.items){assert.ok(p.end<=m.serve-p.rest&&p.end>=m.serve-p.early);assert.equal(p.end-p.start,p.duration);assert.ok(fits(p,r.items.filter(x=>x!==p),m));}}});
+test('maximum six dishes and bounded input',()=>{assert.ok(validate(model(Array.from({length:7},()=>dish()))).length);assert.ok(validate(model([dish({temp:800})])).length);});
